@@ -10,7 +10,7 @@ import {
 
 const DetailedMapComponent = ({ details }) => {
   console.log(details);
-  const center = [19.1953, 72.9651];
+  const center = details.location.coordinates;
   const purpleOptions = { color: "orange" };
 
   const positionsArray = [
@@ -22,7 +22,7 @@ const DetailedMapComponent = ({ details }) => {
   return details ? (
     <MapContainer
       center={details.location.coordinates}
-      zoom={100}
+      zoom={15}
       className="map-component"
       scrollWheelZoom={true}
     >
@@ -39,7 +39,7 @@ const DetailedMapComponent = ({ details }) => {
           );
         })}
 
-        <Circle center={center} pathOptions={purpleOptions} radius={100} />
+        <Circle center={center} pathOptions={purpleOptions} radius={details.radius} />
       </LayerGroup>
     </MapContainer>
   ) : (
