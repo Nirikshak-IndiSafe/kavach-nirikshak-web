@@ -94,12 +94,12 @@ const DetailedBandobast = () => {
             <Divider />
 
             <List dense>
-              {[1, 2, 3, 4, 5].map((x) => {
+              {details.personnels.map((personnel, idx) => {
                 return (
-                  <ListItem key={x}>
+                  <ListItem key={idx}>
                     <ListItemText
-                      primary={`Personnel ${x}`}
-                      secondary="Lorem Ipsum"
+                      primary={`${personnel.firstName} ${personnel.lastName}`}
+                      secondary={`Batch: ${personnel.batch}ID: ${personnel.id_number}`}
                     />
                   </ListItem>
                 );
