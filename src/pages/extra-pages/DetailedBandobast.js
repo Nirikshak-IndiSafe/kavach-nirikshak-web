@@ -23,6 +23,7 @@ const DetailedBandobast = () => {
         const res = await fetch(`http://localhost:5000/api/events/${id}`);
         const { event } = await res.json();
         setDetails(event);
+        console.log(details)
       } catch (error) {
         console.log(error);
       }
@@ -34,10 +35,10 @@ const DetailedBandobast = () => {
   ) : (
     <MainCard title={`Details - ${details.name}`}>
       <Grid container spacing={2}>
-        <Grid item xs={12} sm={7}>
+        <Grid item xs={12} md={7}>
           <DetailedMapComponent details={details} />
         </Grid>
-        <Grid item xs={12} sm={3}>
+        <Grid item xs={12} md={3}>
           <Box
             sx={{
               padding: "0 10px",
@@ -80,7 +81,7 @@ const DetailedBandobast = () => {
             </Button>
           </Box>
         </Grid>
-        <Grid item xs={12} sm={2}>
+        <Grid item xs={12} md={2}>
           <Box
             sx={{
               border: "1px solid lightgrey",

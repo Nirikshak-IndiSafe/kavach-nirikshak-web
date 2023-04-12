@@ -35,13 +35,15 @@ const DashboardDefault = () => {
         <Grid item xs={12} sm={2}>
           <h3>Active Events</h3>
           <Divider></Divider>
-          {events.map((event) => {
+          <List>
+          {events.map((event, count) => {
             return (
-              <List>
+              <ListItemButton key={count+1} component="a" href={`/app/view-bandobast/${event._id}`}>
                 <ListItemText primary={event.name} secondary={event.start} />
-              </List>
+              </ListItemButton>
             );
           })}
+          </List>
         </Grid>
         <Grid item xs={12} sm={10}>
           <MapComponent events={events} />
