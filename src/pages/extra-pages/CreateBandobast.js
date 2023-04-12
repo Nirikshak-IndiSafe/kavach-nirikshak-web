@@ -1,15 +1,13 @@
 import MainCard from "components/MainCard";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Button,
   Grid,
   TextField,
-  Box,
   Select,
   MenuItem,
   Checkbox,
   ListItemText,
-  OutlinedInput,
 } from "../../../node_modules/@mui/material/index";
 
 import DateTimeRangePicker from "@wojtekmaj/react-datetimerange-picker";
@@ -28,7 +26,10 @@ const CreateBandobast = () => {
   });
 
   const [date, onDateChange] = useState([new Date(), new Date()]);
-  const [personName, setPersonName] = React.useState([]);
+  const [personName, setPersonName] = useState([]);
+  const [personnelOptions, setPersonnelOptions] = useState([
+    { firstName: "", lastName: "", id: "" },
+  ]);
 
   const handleChange = (event) => {
     const {
@@ -56,6 +57,7 @@ const CreateBandobast = () => {
       latitude: 20.208088799492007,
       longitude: 73.09654622090271,
       radius: details.radius,
+      personName,
     };
 
     console.log(reqBody);
@@ -73,18 +75,13 @@ const CreateBandobast = () => {
     }
   };
 
-  const names = [
-    "Oliver Hansen",
-    "Van Henry",
-    "April Tucker",
-    "Ralph Hubbard",
-    "Omar Alexander",
-    "Carlos Abbott",
-    "Miriam Wagner",
-    "Bradley Wilkerson",
-    "Virginia Andrews",
-    "Kelly Snyder",
-  ];
+  useEffect(() => {
+    (async () => {
+      const res = await fetch("http://localhost:5000/api/personnel");
+      const data = await res.json();
+      setPersonnelOptions(data);
+    })();
+  }, []);
 
   return (
     <MainCard title="Create Bandobast">
@@ -126,7 +123,9 @@ const CreateBandobast = () => {
                 </Grid>
 
                 <Grid item xs={12} sm={12}>
-                <label style={{marginRight: "20px"}}>Please Select Personnels for this operation: </label>
+                  <label style={{ marginRight: "20px" }}>
+                    Please Select Personnels for this operation:{" "}
+                  </label>
                   <Select
                     multiple
                     value={personName}
@@ -137,10 +136,14 @@ const CreateBandobast = () => {
                     }
                     helperText="Please Select Personnels"
                   >
-                    {names.map((name) => (
-                      <MenuItem key={name} value={name}>
-                        <Checkbox checked={personName.indexOf(name) > -1} />
-                        <ListItemText primary={name} />
+                    {personnelOptions.map((option) => (
+                      <MenuItem key={option._id} value={`${option._id}`}>
+                        <Checkbox
+                          checked={personName.indexOf(option._id) > -1}
+                        />
+                        <ListItemText
+                          primary={`${option.firstName} ${option.lastName}`}
+                        />
                       </MenuItem>
                     ))}
                   </Select>
@@ -150,9 +153,9 @@ const CreateBandobast = () => {
                   <DateTimeRangePicker onChange={onDateChange} value={date} />
                 </Grid>
 
-                <Grid item xs={12} sm={12}>
+                {/* <Grid item xs={12} sm={12}>
                   <p>{personName.join(", ")}</p>
-                </Grid>
+                </Grid> */}
 
                 <Grid item xs={12} sm={8}></Grid>
                 <Grid item xs={12} sm={4}>
