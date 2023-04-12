@@ -3,34 +3,32 @@ import MainCard from 'components/MainCard';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import {
-    Box,
-    Button,
-    Divider,
-    Grid,
-    List,
-    ListItem,
-    ListItemText,
-    TextField,
-} from '../../../node_modules/@mui/material/index';
+  Box,
+  Button,
+  Divider,
+  Grid,
+  List,
+  ListItemButton,
+  ListItemText,
+  TextField,
+} from "../../../node_modules/@mui/material/index";
 
 const DetailedBandobast = () => {
     const { id } = useParams();
     const [details, setDetails] = useState(null);
 
-    useEffect(() => {
-        (async () => {
-            try {
-                const res = await fetch(
-                    `http://localhost:5000/api/events/${id}`
-                );
-                const { event } = await res.json();
-                setDetails(event);
-                console.log(details);
-            } catch (error) {
-                console.log(error);
-            }
-        })();
-    }, []);
+  useEffect(() => {
+    (async () => {
+      try {
+        const res = await fetch(`http://localhost:5000/api/events/${id}`);
+        const { event } = await res.json();
+        setDetails(event);
+        console.log(details);
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+  }, []);
 
     return details === null ? (
         <></>
@@ -97,23 +95,27 @@ const DetailedBandobast = () => {
                         <h3>All Personnels</h3>
                         <Divider />
 
-                        <List dense>
-                            {details.personnels.map((personnel, idx) => {
-                                return (
-                                    <ListItem key={idx}>
-                                        <ListItemText
-                                            primary={`${personnel.firstName} ${personnel.lastName}`}
-                                            secondary={`Batch: ${personnel.batch}ID: ${personnel.id_number}`}
-                                        />
-                                    </ListItem>
-                                );
-                            })}
-                        </List>
-                    </Box>
-                </Grid>
-            </Grid>
-        </MainCard>
-    );
+            <List dense>
+              {details.personnels.map((personnel, idx) => {
+                return (
+                  <ListItemButton
+                    key={idx}
+                    component="a"
+                    href={`/app/personnel-profile/${personnel._id}`}
+                  >
+                    <ListItemText
+                      primary={`${personnel.firstName} ${personnel.lastName}`}
+                      secondary={`Batch: ${personnel.batch}ID: ${personnel.id_number}`}
+                    />
+                  </ListItemButton>
+                );
+              })}
+            </List>
+          </Box>
+        </Grid>
+      </Grid>
+    </MainCard>
+  );
 };
 
 export default DetailedBandobast;
