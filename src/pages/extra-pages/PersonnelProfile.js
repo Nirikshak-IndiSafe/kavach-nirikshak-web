@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import MainCard from "components/MainCard";
 import {
   Divider,
@@ -16,28 +16,48 @@ import {
 
 const PersonnelProfile = ({ details }) => {
   const { id } = useParams();
+  const [data, setData] = useState({});
 
-  let objectDate = new Date("2023-04-12T10:29:05.002Z");
+  useEffect(() => {
+    (async () => {
+      try {
+        let res = await fetch(`http://localhost:5000/api/personnel/${id}`);
+        const d = await res.json();
 
-  let day = objectDate.getDate();
+        res = await fetch(`http://localhost:5000/api/stations/${d.station}`);
+        const station = await res.json();
+        d.station = station.data.name
 
-  let month = objectDate.getMonth();
+        setData(d);
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+  }, []);
 
-  let year = objectDate.getFullYear();
+  const getDOB = () => {
+    let objectDate = new Date(data.dob);
 
-  let format2 = `${day}/${month + 1}/${year}`;
+    let day = objectDate.getDate();
+  
+    let month = objectDate.getMonth();
+  
+    let year = objectDate.getFullYear();
+  
+    return `${day}/${month + 1}/${year}`;
+  }
 
   return (
     <MainCard>
-      <h3>{"Utsav Khatu"}</h3>
+      <h3>{data?.firstName}{' '}{data?.lastName}</h3>
       <p>
-        <b>DOB:</b> {format2}
+        <b>DOB:</b> {getDOB()}
       </p>
       <p>
-        <b>Station:</b> Naupada, Thane
+        <b>Station:</b> {data.station}
       </p>
       <p>
-        <b>Batch Number:</b> 4
+        <b>Batch Number:</b> {data.batch}
       </p>
       <br />
       <h3>History</h3>
