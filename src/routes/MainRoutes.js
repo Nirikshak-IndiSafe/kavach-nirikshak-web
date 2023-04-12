@@ -4,6 +4,7 @@ import { lazy } from 'react';
 import Loadable from 'components/Loadable';
 import MainLayout from 'layout/MainLayout';
 import DetailedBandobast from 'pages/extra-pages/DetailedBandobast';
+import PersonnelProfile from 'pages/extra-pages/PersonnelProfile';
 
 // render - dashboard
 const DashboardDefault = Loadable(lazy(() => import('pages/dashboard')));
@@ -28,6 +29,10 @@ const MainRoutes = {
         {
             path: 'view-bandobast/:id',
             element: <DetailedBandobast />
+        },
+        {
+            path: 'personnel-profile/:id',
+            element: <PersonnelProfile />
         },
     ]
 };

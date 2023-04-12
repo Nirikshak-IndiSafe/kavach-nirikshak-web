@@ -8,7 +8,7 @@ import {
   Divider,
   Grid,
   List,
-  ListItem,
+  ListItemButton,
   ListItemText,
   TextField,
 } from "../../../node_modules/@mui/material/index";
@@ -23,7 +23,7 @@ const DetailedBandobast = () => {
         const res = await fetch(`http://localhost:5000/api/events/${id}`);
         const { event } = await res.json();
         setDetails(event);
-        console.log(details)
+        console.log(details);
       } catch (error) {
         console.log(error);
       }
@@ -97,12 +97,16 @@ const DetailedBandobast = () => {
             <List dense>
               {details.personnels.map((personnel, idx) => {
                 return (
-                  <ListItem key={idx}>
+                  <ListItemButton
+                    key={idx}
+                    component="a"
+                    href={`/app/personnel-profile/${personnel._id}`}
+                  >
                     <ListItemText
                       primary={`${personnel.firstName} ${personnel.lastName}`}
                       secondary={`Batch: ${personnel.batch}ID: ${personnel.id_number}`}
                     />
-                  </ListItem>
+                  </ListItemButton>
                 );
               })}
             </List>
