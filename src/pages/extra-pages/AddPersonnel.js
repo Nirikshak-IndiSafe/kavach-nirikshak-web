@@ -1,5 +1,5 @@
 import MainCard from "components/MainCard";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Button,
   Grid,
@@ -20,6 +20,7 @@ const AddPersonnel = () => {
     station: "",
     batch: "",
   });
+  const [stations, setStations] = useState([]);
 
   const [date, onDateChange] = useState(new Date());
 
@@ -39,27 +40,38 @@ const AddPersonnel = () => {
       ...details,
       dob: date,
       admin: false,
-      station: "64364fc6a192eef970dedf19"
-    }
+      station: "64364fc6a192eef970dedf19",
+    };
 
     try {
-      const res = await fetch(
-        "http://localhost:5000/api/personnel/register",
-        {
-          method: 'POST',
-          headers: {
-              "Content-Type": "application/json"
-          },
-          body: JSON.stringify(reqBody)
-        }
-      );
+      const res = await fetch("http://localhost:5000/api/personnel/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(reqBody),
+      });
       console.log(res);
     } catch (error) {
       console.log(error);
     }
 
-  console.log(reqBody)
+    console.log(reqBody);
   };
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const res = await fetch(
+          "http://localhost:5000/api/stations/all/stations"
+        );
+        const data = await res.json();
+        setStations(data.stations);
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+  }, []);
 
   return (
     <MainCard title="Add Personnel">
@@ -119,9 +131,9 @@ const AddPersonnel = () => {
                     name="station"
                     onChange={onChange}
                   >
-                    {[1, 2, 3, 4, 5].map((option) => (
-                      <MenuItem key={option} value={option}>
-                        {`Station ${option}`}
+                    {stations.map((option, idx) => (
+                      <MenuItem key={idx} value={option._id}>
+                        {option.name}
                       </MenuItem>
                     ))}
                   </TextField>
