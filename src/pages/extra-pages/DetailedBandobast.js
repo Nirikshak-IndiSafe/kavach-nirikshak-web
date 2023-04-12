@@ -1,6 +1,6 @@
 import DetailedMapComponent from "components/DetailedMapComponent";
 import MainCard from "components/MainCard";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import {
   Box,
@@ -15,13 +15,27 @@ import {
 
 const DetailedBandobast = () => {
   const { id } = useParams();
-  console.log(id);
+  const [details, setDetails] = useState(null);
 
-  return (
-    <MainCard title={`Details of Bandobast ${id}`}>
+  useEffect(() => {
+    (async () => {
+      try {
+        const res = await fetch(`http://localhost:5000/api/events/${id}`);
+        const { event } = await res.json();
+        setDetails(event);
+      } catch (error) {
+        console.log(error);
+      }
+    })();
+  }, []);
+
+  return details === null ? (
+    <></>
+  ) : (
+    <MainCard title={`Details - ${details.name}`}>
       <Grid container spacing={2}>
         <Grid item xs={12} sm={7}>
-          <DetailedMapComponent />
+          <DetailedMapComponent details={details} />
         </Grid>
         <Grid item xs={12} sm={3}>
           <Box
@@ -57,7 +71,7 @@ const DetailedBandobast = () => {
               multiline
               rows={3}
               label="Enter Notification"
-                helperText="Broadcast message to all personnel"
+              helperText="Broadcast message to all personnel"
               gutterBottom
             ></TextField>
             <br />

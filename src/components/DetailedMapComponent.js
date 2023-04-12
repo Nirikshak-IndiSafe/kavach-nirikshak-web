@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   MapContainer,
   TileLayer,
@@ -8,8 +8,9 @@ import {
   Circle,
 } from "react-leaflet";
 
-const DetailedMapComponent = () => {
-  const center = [19.1955, 72.9652];
+const DetailedMapComponent = ({ details }) => {
+  console.log(details);
+  const center = [19.1953, 72.9651];
   const purpleOptions = { color: "orange" };
 
   const positionsArray = [
@@ -18,9 +19,9 @@ const DetailedMapComponent = () => {
     [19.1956, 72.9658],
   ];
 
-  return (
+  return details ? (
     <MapContainer
-      center={center}
+      center={details.location.coordinates}
       zoom={100}
       className="map-component"
       scrollWheelZoom={true}
@@ -41,6 +42,8 @@ const DetailedMapComponent = () => {
         <Circle center={center} pathOptions={purpleOptions} radius={100} />
       </LayerGroup>
     </MapContainer>
+  ) : (
+    <></>
   );
 };
 
