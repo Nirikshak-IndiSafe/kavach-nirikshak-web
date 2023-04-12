@@ -27,7 +27,24 @@ const DetailedBandobast = () => {
 
     useEffect(() => {
         const showMessage = (msg) => {
-            setMessages((messages) => [...messages, msg]);
+            setMessages((messages) => {
+                let newMessages = messages;
+                newMessages = newMessages.filter(
+                    (message) => message[0] != msg['from']
+                );
+                newMessages.push([
+                    msg['from'],
+                    msg['message']['latitude'],
+                    msg['message']['longitude'],
+                ]);
+
+                // newMessages[msg['from']] = {
+                //     lat: msg['message']['latitude'],
+                //     lng: msg['message']['longitude'],
+                // };
+                // console.log(newMessages);
+                return newMessages;
+            });
         };
 
         // add listener
@@ -49,7 +66,7 @@ const DetailedBandobast = () => {
         return () => {
             pubnub.removeListener(listener);
         };
-    }, [pubnub, setMessages]);
+    }, [pubnub]);
 
     // publish message
     const publishMessage = async (message) => {
@@ -111,7 +128,10 @@ const DetailedBandobast = () => {
         <MainCard title={`Details - ${details.name}`}>
             <Grid container spacing={2}>
                 <Grid item xs={12} md={7}>
-                    <DetailedMapComponent details={details} />
+                    <DetailedMapComponent
+                        details={details}
+                        positionsArray={messages}
+                    />
                 </Grid>
                 <Grid item xs={12} md={3}>
                     <Box
