@@ -17,7 +17,7 @@ const LoginRoutes = {
     children: [
         {
             path: '/',
-            element: !authenticated ? <AuthLogin /> : <Navigate to="/app/dashboard" />
+            element: !authenticated ? <AuthLogin /> : <Navigate to="/app/view-bandobast" />
         }
     ]
 };

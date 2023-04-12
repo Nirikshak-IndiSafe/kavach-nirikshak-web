@@ -6,6 +6,7 @@ import MainLayout from 'layout/MainLayout';
 
 // render - dashboard
 const DashboardDefault = Loadable(lazy(() => import('pages/dashboard')));
+const CreateBandobast = Loadable(lazy(() => import('pages/extra-pages/CreateBandobast')));
 
 // ==============================|| MAIN ROUTING ||============================== //
 const authenticated = localStorage.getItem("authenticated")
@@ -18,6 +19,10 @@ const MainRoutes = {
         {
             path: 'view-bandobast',
             element: <DashboardDefault />
+        },
+        {
+            path: 'create-bandobast',
+            element: <CreateBandobast />
         },
     ]
 };
