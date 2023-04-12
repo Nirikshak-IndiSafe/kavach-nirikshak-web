@@ -54,8 +54,7 @@ const CreateBandobast = () => {
       name: details.name,
       start: date[0],
       end: date[1],
-      latitude: 20.208088799492007,
-      longitude: 73.09654622090271,
+      address: details.address,
       radius: details.radius,
       personName,
     };
