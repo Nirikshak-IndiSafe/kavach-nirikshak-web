@@ -9,3 +9,10 @@
     border-radius: 5px;
 }
 
+.react-date-picker__wrapper {
+    border: 1px solid lightgrey !important;
+    padding: 5px;
+    border-radius: 5px;
+    margin-left: 20px;
+}
+

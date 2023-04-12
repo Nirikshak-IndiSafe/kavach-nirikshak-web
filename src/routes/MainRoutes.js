@@ -5,6 +5,7 @@ import Loadable from 'components/Loadable';
 import MainLayout from 'layout/MainLayout';
 import DetailedBandobast from 'pages/extra-pages/DetailedBandobast';
 import PersonnelProfile from 'pages/extra-pages/PersonnelProfile';
+import AddPersonnel from 'pages/extra-pages/AddPersonnel';
 
 // render - dashboard
 const DashboardDefault = Loadable(lazy(() => import('pages/dashboard')));
@@ -33,6 +34,10 @@ const MainRoutes = {
         {
             path: 'personnel-profile/:id',
             element: <PersonnelProfile />
+        },
+        {
+            path: 'add-personnel',
+            element: <AddPersonnel/>
         },
     ]
 };

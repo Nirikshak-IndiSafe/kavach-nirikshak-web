@@ -8226,7 +8226,7 @@
     "copy-to-clipboard" "^3.3.1"
     "prop-types" "^15.8.1"
 
-"react-date-picker@^10.0.0":
+"react-date-picker@^10.0.0", "react-date-picker@^10.0.3":
   "integrity" "sha512-v+ZNN66hEQak20bxngSTJLzR9Z52luof0UDrlFO7hv2hCx7aaSuHLHm+lbwhvFF4y7Gn7Pjvbm5jHuwzn9Xw5w=="
   "resolved" "https://registry.npmjs.org/react-date-picker/-/react-date-picker-10.0.3.tgz"
   "version" "10.0.3"
