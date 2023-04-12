@@ -39,7 +39,6 @@ const Breadcrumbs = ({ navigation, title, ...others }) => {
       }
       return false;
     });
-    console.log(item);
   });
 
   // only used for component demo breadcrumbs
