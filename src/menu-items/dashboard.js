@@ -37,14 +37,6 @@ const dashboard = {
             breadcrumbs: false
         },
         {
-            id: 'profile',
-            title: 'Profile',
-            type: 'item',
-            url: '/app/profile',
-            icon: AccountBoxOutlinedIcon,
-            breadcrumbs: false
-        },
-        {
             id: 'all',
             title: 'All Personnel',
             type: 'item',

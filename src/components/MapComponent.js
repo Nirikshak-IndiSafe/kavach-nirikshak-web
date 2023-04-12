@@ -27,6 +27,7 @@ const MapComponent = ({ events }) => {
       <LayerGroup>
         {events.map((event) => {
           const position = event.location.coordinates;
+          console.log(position)
           return (
             <>
               <Marker position={position}>
