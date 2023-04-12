@@ -1,13 +1,32 @@
 import MainCard from "components/MainCard";
-import React from "react";
+import React, { useState } from "react";
 import {
   Button,
   Grid,
-  MenuItem,
   TextField,
 } from "../../../node_modules/@mui/material/index";
 
 const CreateBandobast = () => {
+  const [details, setDetails] = useState({
+    name: "",
+    address: "",
+    start: "",
+    end: "",
+    radius: 0,
+  });
+
+  const onChange = (e) => {
+    setDetails({
+      ...details,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    console.log(details);
+  };
+
   return (
     <MainCard title="Create Bandobast">
       <Grid container>
@@ -17,104 +36,48 @@ const CreateBandobast = () => {
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField
-                  label="Bandobast Location"
+                  label="Event name"
                   fullWidth
-                  helperText="Please Enter Bandobast Location"
+                  helperText="Enter event name"
                   margin="normal"
+                  name="name"
+                  onChange={onChange}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
-                  select
                   label="Bandobast Radius"
-                  defaultValue="10m"
-                  helperText="Please select Bandobast Radius"
+                  defaultValue="10"
+                  helperText="Please select Bandobast Radius (in meters)"
                   fullWidth
                   margin="normal"
-                >
-                  <MenuItem key={1} value="5m">
-                    5m
-                  </MenuItem>
-                  <MenuItem key={2} value="10m">
-                    10m
-                  </MenuItem>
-                  <MenuItem key={3} value="15m">
-                    15m
-                  </MenuItem>
-                </TextField>
+                  name="radius"
+                  onChange={onChange}
+                ></TextField>
               </Grid>
               <Grid item xs={12} sm={12}>
                 <TextField
-                  label="Bandobast Details"
+                  label="Bandobast Location details"
                   fullWidth
                   multiline
-                  rows={4}
-                  helperText="Please Enter Bandobast Details"
+                  rows={2}
+                  helperText="Please Enter Bandobast Address"
                   margin="normal"
+                  name="address"
+                  onChange={onChange}
                 />
               </Grid>
-              <Grid item xs={12} sm={4}>
-                <TextField
-                  select
-                  label="Priority"
-                  defaultValue="Default"
-                  helperText="Please select Priority"
-                  margin="normal"
-                  fullWidth
-                >
-                  <MenuItem key={1} value="Default">
-                    Default
-                  </MenuItem>
-                  <MenuItem key={2} value="High">
-                    High
-                  </MenuItem>
-                  <MenuItem key={3} value="Low">
-                    Low
-                  </MenuItem>
-                </TextField>
-              </Grid>
-              <Grid item xs={12} sm={4}>
-                <TextField
-                  select
-                  label="Permission"
-                  defaultValue="10m"
-                  helperText="Please select Permission"
-                  margin="normal"
-                  fullWidth
-                >
-                  <MenuItem key={1} value="5m">
-                    5m
-                  </MenuItem>
-                  <MenuItem key={2} value="10m">
-                    10m
-                  </MenuItem>
-                  <MenuItem key={3} value="15m">
-                    15m
-                  </MenuItem>
-                </TextField>
-              </Grid>
-              <Grid item xs={12} sm={4}>
-                <TextField
-                  select
-                  label="Personnel"
-                  defaultValue="10m"
-                  helperText="Please Personnel"
-                  margin="normal"
-                  fullWidth
-                >
-                  <MenuItem key={1} value="5m">
-                    5m
-                  </MenuItem>
-                  <MenuItem key={2} value="10m">
-                    10m
-                  </MenuItem>
-                  <MenuItem key={3} value="15m">
-                    15m
-                  </MenuItem>
-                </TextField>
-              </Grid>
               <Grid item xs={12} sm={8}></Grid>
-              <Grid item xs={12} sm={4}><Button fullWidth variant="contained" color="primary">Create Bandobast</Button></Grid>
+              <Grid item xs={12} sm={4}>
+                <Button
+                  fullWidth
+                  variant="contained"
+                  color="primary"
+                  onClick={onSubmit}
+                >
+                  Create Event
+                </Button>
+              </Grid>
             </Grid>
             <br />
           </form>
