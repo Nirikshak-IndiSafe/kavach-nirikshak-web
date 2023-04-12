@@ -31,10 +31,33 @@ const CreateBandobast = () => {
         });
     };
 
-    const onSubmit = (e) => {
+    const onSubmit = async (e) => {
         e.preventDefault();
-        console.log(details);
-        console.log(date);
+        const reqBody = {
+            name: details.name,
+            start: date[0],
+            end: date[1],
+            latitude: 20.208088799492007,
+            longitude: 73.09654622090271,
+            radius: details.radius
+        }
+
+        console.log(reqBody)
+        try {
+            const res = await fetch(
+              "http://localhost:5000/api/events/create",
+              {
+                method: 'POST',
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(reqBody)
+              }
+            );
+            console.log(res);
+          } catch (error) {
+            console.log(error);
+          }
     };
 
     return (
