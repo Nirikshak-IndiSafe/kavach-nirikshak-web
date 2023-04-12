@@ -82,7 +82,7 @@ import {
   Circle,
 } from "react-leaflet";
 
-const MapComponent = () => {
+const MapComponent = ({ events }) => {
   const position = [19.1955, 72.9652];
   const purpleOptions = { color: "red" };
 
@@ -99,10 +99,21 @@ const MapComponent = () => {
       />
 
       <LayerGroup>
-        <Marker position={position}>
-          <Popup>Bandobast in Panchpakhadi!</Popup>
-        </Marker>
-        <Circle center={position} pathOptions={purpleOptions} radius={100} />
+        {events.map((event) => {
+          const position = event.location.coordinates;
+          return (
+            <>
+              <Marker position={position}>
+                <Popup>{event.name}</Popup>
+              </Marker>
+              <Circle
+                center={position}
+                pathOptions={purpleOptions}
+                radius={100}
+              />
+            </>
+          );
+        })}
       </LayerGroup>
     </MapContainer>
   );
