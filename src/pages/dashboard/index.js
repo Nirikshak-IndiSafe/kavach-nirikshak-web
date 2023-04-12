@@ -29,21 +29,36 @@ const DashboardDefault = () => {
     })();
   }, []);
 
+  const getDOB = (data) => {
+    let objectDate = new Date(data);
+
+    let day = objectDate.getDate();
+  
+    let month = objectDate.getMonth();
+  
+    let year = objectDate.getFullYear();
+  
+    return `${day}/${month + 1}/${year}`;
+  }
+
+
   return (
     <MainCard title="View Bandobast">
       <Grid container spacing={4}>
         <Grid item xs={12} sm={2}>
           <h3>Active Events</h3>
           <Divider></Divider>
+          <div style={{height: "60vh", overflowY: "scroll"}}>
           <List>
           {events.map((event, count) => {
             return (
               <ListItemButton key={count+1} component="a" href={`/app/view-bandobast/${event._id}`}>
-                <ListItemText primary={event.name} secondary={event.start} />
+                <ListItemText primary={event.name} secondary={getDOB(event.start)} />
               </ListItemButton>
             );
           })}
           </List>
+          </div>
         </Grid>
         <Grid item xs={12} sm={10}>
           <MapComponent events={events} />

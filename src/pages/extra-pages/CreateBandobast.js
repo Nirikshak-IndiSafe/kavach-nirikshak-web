@@ -54,8 +54,7 @@ const CreateBandobast = () => {
       name: details.name,
       start: date[0],
       end: date[1],
-      latitude: 20.208088799492007,
-      longitude: 73.09654622090271,
+      address: details.address,
       radius: details.radius,
       personName,
     };
@@ -103,7 +102,8 @@ const CreateBandobast = () => {
                 <Grid item xs={12} sm={6}>
                   <TextField
                     label="Bandobast Radius"
-                    defaultValue="10"
+                    type="number"
+                    defaultValue="500"
                     helperText="Please select Bandobast Radius (in meters)"
                     fullWidth
                     name="radius"
@@ -121,8 +121,19 @@ const CreateBandobast = () => {
                     onChange={onChange}
                   />
                 </Grid>
-
                 <Grid item xs={12} sm={12}>
+                  <TextField
+                    label="Bandobast Description"
+                    fullWidth
+                    multiline
+                    rows={4}
+                    helperText="Please Enter Bandobast Address"
+                    name="address"
+                    onChange={onChange}
+                  />
+                </Grid>
+
+                <Grid item xs={12} sm={6}>
                   <label style={{ marginRight: "20px" }}>
                     Please Select Personnels for this operation:{" "}
                   </label>
@@ -147,6 +158,18 @@ const CreateBandobast = () => {
                       </MenuItem>
                     ))}
                   </Select>
+                </Grid>
+
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    label="Priority"
+                    type="number"
+                    defaultValue="1"
+                    helperText="Please select Priority"
+                    fullWidth
+                    name="priority"
+                    onChange={onChange}
+                  ></TextField>
                 </Grid>
 
                 <Grid item xs={12} sm={6}>

@@ -37,18 +37,10 @@ const dashboard = {
             breadcrumbs: false
         },
         {
-            id: 'profile',
-            title: 'Profile',
+            id: 'all',
+            title: 'All Personnel',
             type: 'item',
-            url: '/app/profile',
-            icon: AccountBoxOutlinedIcon,
-            breadcrumbs: false
-        },
-        {
-            id: 'other',
-            title: 'Other',
-            type: 'item',
-            url: '/app/other',
+            url: '/app/all-personnel',
             icon: ListOutlinedIcon,
             breadcrumbs: false
         },

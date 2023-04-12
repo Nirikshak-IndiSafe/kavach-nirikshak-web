@@ -6,6 +6,7 @@ import MainLayout from 'layout/MainLayout';
 import DetailedBandobast from 'pages/extra-pages/DetailedBandobast';
 import PersonnelProfile from 'pages/extra-pages/PersonnelProfile';
 import AddPersonnel from 'pages/extra-pages/AddPersonnel';
+import AllPersonnel from 'pages/extra-pages/AllPersonnel';
 
 // render - dashboard
 const DashboardDefault = Loadable(lazy(() => import('pages/dashboard')));
@@ -38,6 +39,10 @@ const MainRoutes = {
         {
             path: 'add-personnel',
             element: <AddPersonnel/>
+        },
+        {
+            path: 'all-personnel',
+            element: <AllPersonnel />
         },
     ]
 };
