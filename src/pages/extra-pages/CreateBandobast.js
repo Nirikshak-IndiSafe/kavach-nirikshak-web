@@ -126,6 +126,7 @@ const CreateBandobast = () => {
                 </Grid>
 
                 <Grid item xs={12} sm={12}>
+                <label style={{marginRight: "20px"}}>Please Select Personnels for this operation: </label>
                   <Select
                     multiple
                     value={personName}
