@@ -1,6 +1,10 @@
 
 import DashboardIcon from '@mui/icons-material/Dashboard';
-
+import MapOutlinedIcon from '@mui/icons-material/MapOutlined';
+import AddLocationAltOutlinedIcon from '@mui/icons-material/AddLocationAltOutlined';
+import PersonAddOutlinedIcon from '@mui/icons-material/PersonAddOutlined';
+import AccountBoxOutlinedIcon from '@mui/icons-material/AccountBoxOutlined';
+import ListOutlinedIcon from '@mui/icons-material/ListOutlined';
 // ==============================|| MENU ITEMS - DASHBOARD ||============================== //
 
 const dashboard = {
@@ -13,7 +17,7 @@ const dashboard = {
             title: 'View Bandobast',
             type: 'item',
             url: '/app/view-bandobast',
-            icon: DashboardIcon,
+            icon: MapOutlinedIcon,
             breadcrumbs: false
         },
         {
@@ -21,7 +25,7 @@ const dashboard = {
             title: 'Create Bandobast',
             type: 'item',
             url: '/app/create-bandobast',
-            icon: DashboardIcon,
+            icon: AddLocationAltOutlinedIcon,
             breadcrumbs: false
         },
         {
@@ -29,7 +33,7 @@ const dashboard = {
             title: 'Add Personnel',
             type: 'item',
             url: '/app/add-personnel',
-            icon: DashboardIcon,
+            icon: PersonAddOutlinedIcon,
             breadcrumbs: false
         },
         {
@@ -37,7 +41,7 @@ const dashboard = {
             title: 'Profile',
             type: 'item',
             url: '/app/profile',
-            icon: DashboardIcon,
+            icon: AccountBoxOutlinedIcon,
             breadcrumbs: false
         },
         {
@@ -45,7 +49,7 @@ const dashboard = {
             title: 'Other',
             type: 'item',
             url: '/app/other',
-            icon: DashboardIcon,
+            icon: ListOutlinedIcon,
             breadcrumbs: false
         },
     ]
