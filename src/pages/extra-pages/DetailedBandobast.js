@@ -1,34 +1,109 @@
+import Pubnub from 'pubnub';
 import DetailedMapComponent from 'components/DetailedMapComponent';
 import MainCard from 'components/MainCard';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import {
-  Box,
-  Button,
-  Divider,
-  Grid,
-  List,
-  ListItemButton,
-  ListItemText,
-  TextField,
-} from "../../../node_modules/@mui/material/index";
+    Box,
+    Button,
+    Divider,
+    Grid,
+    List,
+    ListItemButton,
+    ListItemText,
+    TextField,
+} from '../../../node_modules/@mui/material/index';
+
+const pubnub = new Pubnub({
+    publishKey: 'pub-c-fc2bfb00-7232-4340-82b1-1efc6a1f7d41',
+    subscribeKey: 'sub-c-9d7dc568-e522-4355-b3d2-072d63d4c442',
+    userId: 'myUniqueUserId',
+});
 
 const DetailedBandobast = () => {
     const { id } = useParams();
     const [details, setDetails] = useState(null);
+    const [messages, setMessages] = useState([]);
 
-  useEffect(() => {
-    (async () => {
-      try {
-        const res = await fetch(`http://localhost:5000/api/events/${id}`);
-        const { event } = await res.json();
-        setDetails(event);
-        console.log(details);
-      } catch (error) {
-        console.log(error);
-      }
-    })();
-  }, []);
+    useEffect(() => {
+        const showMessage = (msg) => {
+            setMessages((messages) => [...messages, msg]);
+        };
+
+        // add listener
+        const listener = {
+            status: (statusEvent) => {
+                if (statusEvent.category === 'PNConnectedCategory') {
+                    console.log('Connected');
+                }
+            },
+            message: (messageEvent) => {
+                showMessage(messageEvent.message.description);
+            },
+            presence: (presenceEvent) => {
+                // handle presence
+            },
+        };
+        pubnub.addListener(listener);
+        // cleanup listener
+        return () => {
+            pubnub.removeListener(listener);
+        };
+    }, [pubnub, setMessages]);
+
+    // publish message
+    const publishMessage = async (message) => {
+        // With the right payload, you can publish a message, add a reaction to a message,
+        // send a push notification, or send a small payload called a signal.
+        const publishPayload = {
+            channel: id,
+            message: {
+                title: 'greeting',
+                description: {
+                    from: 'Admin',
+                    message: 'Hello Admin',
+                },
+            },
+        };
+        await pubnub.publish(publishPayload);
+    };
+
+    useEffect(() => {
+        // subscribe to a channel
+        // console.log(event);
+        // if (event && event._id) {
+        // console.log(event._id);
+        // console.log(personnel._id);
+        pubnub.subscribe({
+            channels: [id],
+        });
+        // cleanup subscription
+        return () => {
+            pubnub.unsubscribe({
+                channels: [id],
+            });
+        };
+        // }
+    }, [pubnub, id]);
+
+    useEffect(() => {
+        console.log(messages);
+    }, [messages]);
+
+    useEffect(() => {
+        (async () => {
+            try {
+                const res = await fetch(
+                    `http://localhost:5000/api/events/${id}`
+                );
+                const { event } = await res.json();
+                setDetails(event);
+                console.log(details);
+            } catch (error) {
+                console.log(error);
+            }
+        })();
+    }, []);
 
     return details === null ? (
         <></>
@@ -77,7 +152,13 @@ const DetailedBandobast = () => {
                             gutterBottom
                         ></TextField>
                         <br />
-                        <Button fullWidth variant='contained'>
+                        <Button
+                            fullWidth
+                            variant='contained'
+                            onClick={() => {
+                                publishMessage('');
+                            }}
+                        >
                             Notify!
                         </Button>
                     </Box>
@@ -95,27 +176,27 @@ const DetailedBandobast = () => {
                         <h3>All Personnels</h3>
                         <Divider />
 
-            <List dense>
-              {details.personnels.map((personnel, idx) => {
-                return (
-                  <ListItemButton
-                    key={idx}
-                    component="a"
-                    href={`/app/personnel-profile/${personnel._id}`}
-                  >
-                    <ListItemText
-                      primary={`${personnel.firstName} ${personnel.lastName}`}
-                      secondary={`Batch: ${personnel.batch}ID: ${personnel.id_number}`}
-                    />
-                  </ListItemButton>
-                );
-              })}
-            </List>
-          </Box>
-        </Grid>
-      </Grid>
-    </MainCard>
-  );
+                        <List dense>
+                            {details.personnels.map((personnel, idx) => {
+                                return (
+                                    <ListItemButton
+                                        key={idx}
+                                        component='a'
+                                        href={`/app/personnel-profile/${personnel._id}`}
+                                    >
+                                        <ListItemText
+                                            primary={`${personnel.firstName} ${personnel.lastName}`}
+                                            secondary={`Batch: ${personnel.batch}ID: ${personnel.id_number}`}
+                                        />
+                                    </ListItemButton>
+                                );
+                            })}
+                        </List>
+                    </Box>
+                </Grid>
+            </Grid>
+        </MainCard>
+    );
 };
 
 export default DetailedBandobast;
