@@ -1,13 +1,10 @@
 import MainCard from "components/MainCard";
 import {
-  Box,
   Divider,
   Grid,
   List,
-  ListItem,
+  ListItemButton,
   ListItemText,
-  Paper,
-  Typography,
 } from "../../../node_modules/@mui/material/index";
 import MapComponent from "components/MapComponent";
 
@@ -21,25 +18,13 @@ const DashboardDefault = () => {
           <h3>Active Bandobasts</h3>
           <Divider></Divider>
           <List>
-            <ListItemText primary="Bandobast 1" secondary="Lorem Ipsum" />
-          </List>
-          <List>
-            <ListItemText primary="Bandobast 2" secondary="Lorem Ipsum" />
-          </List>
-          <List>
-            <ListItemText primary="Bandobast 3" secondary="Lorem Ipsum" />
-          </List>
-          <List>
-            <ListItemText primary="Bandobast 4" secondary="Lorem Ipsum" />
-          </List>
-          <List>
-            <ListItemText primary="Bandobast 5" secondary="Lorem Ipsum" />
-          </List>
-          <List>
-            <ListItemText primary="Bandobast 5" secondary="Lorem Ipsum" />
-          </List>
-          <List>
-            <ListItemText primary="Bandobast 6" secondary="Lorem Ipsum" />
+            {[1, 2, 3, 4, 5].map((x) => {
+              return (
+                <ListItemButton component="a" key={x} href={`/app/view-bandobast/${x}`}>
+                  <ListItemText primary={`Bandobast ${x}`} secondary="Lorem Ipsum" />
+                </ListItemButton>
+              );
+            })}
           </List>
         </Grid>
         <Grid item xs={12} sm={10}>

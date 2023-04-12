@@ -3,6 +3,7 @@ import { lazy } from 'react';
 // project import
 import Loadable from 'components/Loadable';
 import MainLayout from 'layout/MainLayout';
+import DetailedBandobast from 'pages/extra-pages/DetailedBandobast';
 
 // render - dashboard
 const DashboardDefault = Loadable(lazy(() => import('pages/dashboard')));
@@ -23,6 +24,10 @@ const MainRoutes = {
         {
             path: 'create-bandobast',
             element: <CreateBandobast />
+        },
+        {
+            path: 'view-bandobast/:id',
+            element: <DetailedBandobast />
         },
     ]
 };
