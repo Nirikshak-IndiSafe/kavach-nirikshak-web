@@ -45,10 +45,10 @@ const dashboard = {
             breadcrumbs: false
         },
         {
-            id: 'other',
-            title: 'Other',
+            id: 'all',
+            title: 'All Personnel',
             type: 'item',
-            url: '/app/other',
+            url: '/app/all-personnel',
             icon: ListOutlinedIcon,
             breadcrumbs: false
         },
