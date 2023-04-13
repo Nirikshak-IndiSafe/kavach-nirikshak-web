@@ -23,6 +23,7 @@ const CreateBandobast = () => {
     start: "",
     end: "",
     radius: 0,
+    description: "",
   });
 
   const [date, onDateChange] = useState([new Date(), new Date()]);
@@ -57,6 +58,7 @@ const CreateBandobast = () => {
       address: details.address,
       radius: details.radius,
       personName,
+      description: details.description,
     };
 
     console.log(reqBody);
@@ -127,8 +129,8 @@ const CreateBandobast = () => {
                     fullWidth
                     multiline
                     rows={4}
-                    helperText="Please Enter Bandobast Address"
-                    name="address"
+                    helperText="Please Enter Description for the event"
+                    name="description"
                     onChange={onChange}
                   />
                 </Grid>

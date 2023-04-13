@@ -26,48 +26,48 @@ const DetailedBandobast = () => {
   const [messages, setMessages] = useState([]);
   const [position, setPosition] = useState({});
 
-    useEffect(() => {
-        const showMessage = (msg) => {
-            setMessages((messages) => {
-                let newMessages = messages;
-                newMessages = newMessages.filter(
-                    (message) => message[0] != msg['from']
-                );
-                newMessages.push([
-                    msg['from'],
-                    msg['message']['latitude'],
-                    msg['message']['longitude'],
-                ]);
+  useEffect(() => {
+    const showMessage = (msg) => {
+      setMessages((messages) => {
+        let newMessages = messages;
+        newMessages = newMessages.filter(
+          (message) => message[0] != msg["from"]
+        );
+        newMessages.push([
+          msg["from"],
+          msg["message"]["latitude"],
+          msg["message"]["longitude"],
+        ]);
 
-                // newMessages[msg['from']] = {
-                //     lat: msg['message']['latitude'],
-                //     lng: msg['message']['longitude'],
-                // };
-                // console.log(newMessages);
-                return newMessages;
-            });
-        };
+        // newMessages[msg['from']] = {
+        //     lat: msg['message']['latitude'],
+        //     lng: msg['message']['longitude'],
+        // };
+        // console.log(newMessages);
+        return newMessages;
+      });
+    };
 
-        // add listener
-        const listener = {
-            status: (statusEvent) => {
-                if (statusEvent.category === 'PNConnectedCategory') {
-                    console.log('Connected');
-                }
-            },
-            message: (messageEvent) => {
-                showMessage(messageEvent.message.description);
-            },
-            presence: (presenceEvent) => {
-                // handle presence
-            },
-        };
-        pubnub.addListener(listener);
-        // cleanup listener
-        return () => {
-            pubnub.removeListener(listener);
-        };
-    }, [pubnub, setMessages]);
+    // add listener
+    const listener = {
+      status: (statusEvent) => {
+        if (statusEvent.category === "PNConnectedCategory") {
+          console.log("Connected");
+        }
+      },
+      message: (messageEvent) => {
+        showMessage(messageEvent.message.description);
+      },
+      presence: (presenceEvent) => {
+        // handle presence
+      },
+    };
+    pubnub.addListener(listener);
+    // cleanup listener
+    return () => {
+      pubnub.removeListener(listener);
+    };
+  }, [pubnub, setMessages]);
 
   // publish message
   const publishMessage = async (message) => {
@@ -128,79 +128,69 @@ const DetailedBandobast = () => {
     })();
   }, []);
 
-    return details === null ? (
-        <></>
-    ) : (
-        <MainCard title={`Details - ${details.name}`}>
-            <Grid container spacing={2}>
-                <Grid item xs={12} md={7}>
-                    <DetailedMapComponent
-                        details={details}
-                        positionsArray={messages}
-                    />
-                </Grid>
-                <Grid item xs={12} md={3}>
-                    <Box
-                        sx={{
-                            padding: '0 10px',
-                            border: '1px solid lightgrey',
-                            borderRadius: '10px',
-                        }}
-                    >
-                        <h3>Descripton</h3>
-                        <Divider />
-                        <p>
-                            Lorem ipsum dolor sit amet consectetur adipisicing
-                            elit. Maxime mollitia, molestiae quas vel sint
-                            commodi repudiandae consequuntur voluptatum laborum
-                            numquam blanditiis harum quisquam eius sed odit
-                            fugiat iusto fuga praesentium optio, eaque rerum!
-                            Provident similique accusantium nemo autem.
-                        </p>
-                    </Box>
-                    <br />
-                    <Box
-                        sx={{
-                            padding: '0 10px',
-                            paddingBottom: '10px',
-                            border: '1px solid lightgrey',
-                            borderRadius: '10px',
-                        }}
-                    >
-                        <h3>Notification</h3>
-                        <TextField
-                            variant='filled'
-                            fullWidth
-                            multiline
-                            rows={3}
-                            label='Enter Notification'
-                            helperText='Broadcast message to all personnel'
-                            gutterBottom
-                        ></TextField>
-                        <br />
-                        <Button
-                            fullWidth
-                            variant='contained'
-                            onClick={() => {
-                                publishMessage('');
-                            }}
-                        >
-                            Notify!
-                        </Button>
-                    </Box>
-                </Grid>
-                <Grid item xs={12} md={2}>
-                    <Box
-                        sx={{
-                            border: '1px solid lightgrey',
-                            borderRadius: '10px',
-                            height: '70vh',
-                            padding: '0 10px',
-                            overflowY: 'scroll',
-                        }}
-                    >
-                        <h3>All Personnels</h3>
-                        <Divider />
+  return details === null ? (
+    <></>
+  ) : (
+    <MainCard title={`Details - ${details.name}`}>
+      <Grid container spacing={2}>
+        <Grid item xs={12} md={7}>
+          <DetailedMapComponent details={details} positionsArray={messages} />
+        </Grid>
+        <Grid item xs={12} md={3}>
+          <Box
+            sx={{
+              padding: "0 10px",
+              border: "1px solid lightgrey",
+              borderRadius: "10px",
+            }}
+          >
+            <h3>Descripton</h3>
+            <Divider />
+            <p>{details.description}</p>
+          </Box>
+          <br />
+          <Box
+            sx={{
+              padding: "0 10px",
+              paddingBottom: "10px",
+              border: "1px solid lightgrey",
+              borderRadius: "10px",
+            }}
+          >
+            <h3>Notification</h3>
+            <TextField
+              variant="filled"
+              fullWidth
+              multiline
+              rows={3}
+              label="Enter Notification"
+              helperText="Broadcast message to all personnel"
+              gutterBottom
+            ></TextField>
+            <br />
+            <Button
+              fullWidth
+              variant="contained"
+              onClick={() => {
+                publishMessage("");
+              }}
+            >
+              Notify!
+            </Button>
+          </Box>
+        </Grid>
+        <Grid item xs={12} md={2}>
+          <Box
+            sx={{
+              border: "1px solid lightgrey",
+              borderRadius: "10px",
+              height: "70vh",
+              padding: "0 10px",
+              overflowY: "scroll",
+            }}
+          >
+            <h3>All Personnels</h3>
+            <Divider />
 
             <List dense>
               {details.personnels.map((personnel, idx) => {

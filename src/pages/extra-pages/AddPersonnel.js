@@ -40,8 +40,9 @@ const AddPersonnel = () => {
       ...details,
       dob: date,
       admin: false,
-      station: "64364fc6a192eef970dedf19",
     };
+
+    console.log(reqBody);
 
     try {
       const res = await fetch("http://localhost:5000/api/personnel/register", {
